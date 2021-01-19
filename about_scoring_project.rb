@@ -31,6 +31,26 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 
 def score(dice)
   # You need to write this method
+  score = 0
+  totals = [0]*7
+
+  dice.map {|i| totals[i]+=1}
+  # add up the sets.
+  for i in (1..6)
+    if totals[i] >= 3
+      if i == 1
+        score += 1000
+      else
+        score += 100*i
+      end
+      totals[i] -= 3
+    end
+  end
+
+  # any remaining 1s and 5s.
+  score += (totals[1]*100+totals[5]*50)
+
+  return score
 end
 
 class AboutScoringProject < Neo::Koan
